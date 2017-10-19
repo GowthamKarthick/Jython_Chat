@@ -8,30 +8,22 @@ from java.awt import *
 class Server:
 
   def Send(self,event):
-        # Process the events from the list box and update the label
     q = self.textfield.text    
-    self.list.getModel().addElement('you:'+q)
-    self.c.send(q)
+    self.list.getModel().addElement('you:'+q)#add the sending text in our own list
+    self.c.send(q)#send the text
 
   def __init__(self):
-
-        # These lines setup the basic frame, size and layout
-        # the setDefaultCloseOperation is required to completely exit the app
-        # when you click the close button
     frame = JFrame("Chat application(Server)")
     frame.setSize(200, 225)
     frame.setLayout(BorderLayout())
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
-    # set up the list and the contents of the list
-    # the python typle get converted to a Java vector    
-    
     self.list = JList(DefaultListModel())
     spane = JScrollPane()
     spane.setPreferredSize(Dimension(100,125))
     spane.getViewport().setView((self.list))
     self.textfield=JTextField('',50)
-        # a panel is a bit over kill but this is a demo. :)
+        
     label1=JLabel('Enter the text')
     panel = JPanel()
     panel.add(spane)
@@ -39,10 +31,7 @@ class Server:
     panel.add(self.textfield)
     frame.add(panel,BorderLayout.CENTER)
 
-        # create the button, and city label and the show our work
-        # with Jython only one line is needed create a button and attach an
-        # event handler.
-    btn = JButton('Select',actionPerformed=self.Send)
+    btn = JButton('Send',actionPerformed=self.Send)
     frame.add(btn,BorderLayout.SOUTH)
     self.label = JLabel(' Received  Messages ')
     frame.add(self.label,BorderLayout.NORTH)
@@ -59,10 +48,9 @@ class Server:
     		self.c, addr = self.s.accept()
     		print 'From', addr
     	else:    	
-    		self.list.getModel().addElement(self.c.recv(1024))
+    		self.list.getModel().addElement(self.c.recv(1024)) #receive the text add in list
     		
     		
 
-if __name__ == '__main__':
-        #start things off.
+if __name__ == '__main__':        
         Server()
